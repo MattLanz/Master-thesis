@@ -324,16 +324,32 @@ Following this, the autocorrelation function plots are presented. Analyzing the 
 In this chapter, an examination of the primary facets of the three datasets has been conducted, with a particular emphasis on the time series of pollutants. In order to consolidate the most significant characteristics of the datasets, the following summary table is presented.
 
 
+
 \begin{table}[!ht]
     \centering
     
     \begin{tabular}{|l|l|c@{\hspace{4pt}}c@{\hspace{4pt}}c@{\hspace{4pt}}c@{\hspace{4pt}}c@{\hspace{4pt}}c|ccc|}
     \hline
         \multirow{2}{*}{Dataset} & \multirow{2}{*}{Duration} & \multicolumn{6}{c|}{Available pollutants} & \multicolumn{3}{c|}{External features} \\ \cline{3-11}
-        & & O3 & PM10 & PM2.5 & NO2 & SO2 & CO & Traffic & Parkings & Weather \\ \hline
-        Citypulse & 3 Months & \checkmark & \checkmark & \checkmark & \checkmark & ~ & ~ & 1 & 1 & 7 \\ \hline
-        Seoul & 3 Years & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark & 0 & 0 & 7 \\ \hline
-        Madrid & 3 Years & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark & 0 & 0 & 10 \\ \hline
+        & & O\textsubscript{3} & PM\textsubscript{10} & PM\textsubscript{2.5} & NO\textsubscript{2} & SO\textsubscript{2} & CO & Traffic & Parkings & Weather \\ \hline
+        \multirow{2}{*}{Citypulse} & 3 Months & \multirow{2}{*}{\checkmark} & \multirow{2}{*}{\checkmark} & \multirow{2}{*}{\checkmark} & \multirow{2}{*}{\checkmark} & & & \multirow{2}{*}{1} & \multirow{2}{*}{1} & \multirow{2}{*}{7} \\ 
+        
+        & Aug - Nov 2014 &&&&&&&&&\\
+        \hline
+
+        
+        \multirow{2}{*}{Seoul} & 3 Years & \multirow{2}{*}{\checkmark} & \multirow{2}{*}{\checkmark} & \multirow{2}{*}{\checkmark} & \multirow{2}{*}{\checkmark} & \multirow{2}{*}{\checkmark}& \multirow{2}{*}{\checkmark} & \multirow{2}{*}{0} & \multirow{2}{*}{0} & \multirow{2}{*}{7} \\ 
+        
+        & 2017 - 2019 &&&&&&&&&\\
+        
+        \hline
+
+
+        \multirow{2}{*}{Madrid} & 3 Years & \multirow{2}{*}{\checkmark} & \multirow{2}{*}{\checkmark} & \multirow{2}{*}{\checkmark} & \multirow{2}{*}{\checkmark} & \multirow{2}{*}{\checkmark}& \multirow{2}{*}{\checkmark} & \multirow{2}{*}{0} & \multirow{2}{*}{0} & \multirow{2}{*}{10} \\ 
+        
+        & 2015 - 2017 &&&&&&&&&\\
+
+        \hline
     \end{tabular}
     \caption{Summary table of the Datasets}
     

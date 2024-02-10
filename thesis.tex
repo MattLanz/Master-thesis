@@ -14,6 +14,7 @@
 \usepackage{lmodern}
 \usepackage{varioref}
 \usepackage{url}
+\usepackage{multirow}
 \usepackage{array}
 \usepackage{paralist}{\obeyspaces\global\let =\space}
 \usepackage{verbatim}
@@ -33,7 +34,7 @@
 \usepackage{amsmath}
 \usepackage[babel]{csquotes}
 \usepackage{hyperref}
-\usepackage[backend=biber,bibencoding=ascii, sorting=none]{biblatex}
+\usepackage[backend=biber,bibencoding=ascii, sorting=none, defernumbers]{biblatex}
 \usepackage{enumitem}
 \usepackage{colortbl}
 
@@ -103,6 +104,7 @@
 
 % LISTA DEI CAPITOLI DA INCLUDERE - PERSONALIZZARE
 \includeonly{%
+Introductions,%
 Chapter1,%
 Chapter2,%
 Chapter3,%
@@ -207,7 +209,7 @@ appendix,
 
 % INDICE GENERALE
 \tableofcontents
-
+\include{Introductions}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -229,8 +231,8 @@ appendix,
 
 % BIBLIOGRAFIA
 \phantomsection
-\addcontentsline{toc}{chapter}{\refname}
-\printbibliography
+\printbibliography[type=article,title={Bibliography}, heading=bibintoc]
+\printbibliography[type=online,title={Web references}, heading=bibintoc]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

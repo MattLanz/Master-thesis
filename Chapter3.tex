@@ -3,7 +3,7 @@
 
 This chapter aims to explore two key elements in time series analysis: data preparation and model architectures. Effective manipulation and organization of information is a key prerequisite to facilitate learning from a forecasting model due to the high complexity of temporal data. The first section of this chapter will focus on the methodology and techniques used to prepare temporal data, outlining selected practical approaches to address specific challenges noted in the chosen data.
 
-The following section will shift the focus to model architectures. Several architectural paradigms will be examined, with particular emphasis on advanced solutions that have demonstrated significant impact in the time series prediction task, some already anticipated in the \ref{cap1:sota} section.
+The following section will shift the focus to model architectures. Several architectural paradigms will be examined, with particular emphasis on advanced solutions that have demonstrated significant impact in the time series prediction task, some already anticipated in Section \ref{cap1:sota}.
 
 \section{Data Preparation}
 \label{sec:DataPreparation}
@@ -13,7 +13,7 @@ The principal function of data preparation is to locate relevant characteristics
 To extract pertinent information from raw data, which is frequently heterogeneous and unstructured, considerable selection is required. Data cleansing, controlling outliers, addressing missing values, and guaranteeing data consistency are all part of the first step of data preparation. By interacting, these measurements help to create a more refined dataset, which serves as the foundation for further analytical procedures.
 
 \subsection{Feature engineering and selection}
-Feature selection and design in a deep learning model involves choosing the most important features for the model and creating ad hoc features to aid learning. 
+Feature selection and design in a machine learning model involves choosing the most important features for the model and creating ad hoc features to aid learning. 
 \textbf{Feature selection} is the process of selecting a subset of relevant features for use in building the model.
 Feature selection techniques are used for several reasons, including simplifying models to make them more easily interpretable, reducing training times, and avoiding the curse of dimensionality.
 In our case, feature selection is utilized to eliminate redundant exogenous variables based on their correlation.
@@ -60,7 +60,6 @@ In the context of this research project, the application of a data augmentation 
 
 \begin{figure}
 \[X_{\text{jittered}, i} = X_i + \epsilon_i\]
-\caption{Jittering formula}
 \label{eq:jittering}
 \end{figure}
 Where: 
@@ -80,7 +79,7 @@ Where:
 
 \subsection{Data splitting}
 
-The research question of this work involves a multivariate multi-step forecasting task. In practical terms, this means using past observations at time \textsubscript{past} to predict a future time horizon at \textsubscript{future}. Typically, the time window used for t\textsubscript{past} is greater than or equal to the time window used for t\textsubscript{future}.
+The research question of this work involves a multivariate multi-step forecasting task. In practical terms, this means using past observations at time $t_{past}$ to predict a future time horizon at $t_{future}$. Typically, the time window used for $t_{past}$ is greater than or equal to the time window used for $t_{future}$.
 In our case, we employ a technique that transforms the dataset from unsupervised to supervised. A dataset for supervised learning contains one or more target variables, each assigned to a set of independent variables.
 In all experiments, we used 168 past observations (24 observations per day for 7 days) to forecast 24 future observations (1 day).
 
@@ -124,17 +123,34 @@ Additionally, the study aimed to assess the effectiveness of the models using bo
 Deep learning models are known for their complex architectures, which consist of multiple layers and numerous parameters. The interaction of these components can introduce a high degree of variability in the performance of different models, even when they are trained on the same dataset. Therefore, it is essential to use rigorous testing procedures to evaluate the effectiveness of various architectures. Evaluations are based on objective metrics such as error, as well as considerations of generalization and computational efficiency.
 Various architectures, from basic to modern, have been tested for their effectiveness, efficiency, and generalization capability.
 
-\subsection*{Baseline}
+\subsection{ARIMA}
 \label{subsec:baseline}
 
 To provide an overall comparison between the models proposed, an ARIMA model has been developed, which, taking as input one pollutant at once, together with other variables, including the time-based features, predicts the variable for multiple steps over time. 
-The Autoregressive Integrated Moving Average (ARIMA) model is a traditional time series forecasting technique developed by Box and Jenkins \cite{box1970time}. It combines autoregression (AR), differencing (I), and moving averages (MA). The general form is ARIMA(p, d, q), where p is the autoregressive order, d is the differencing order, and q is the moving average order. The model equation is:
+The Autoregressive Integrated Moving Average (ARIMA) model is a traditional time series forecasting technique developed by Box and Jenkins \cite{box1970time}. It combines autoregression (AR), differencing (I), and moving averages (MA). The general form is ARIMA(p, d, q), where p is the autoregressive order, d is the differencing order, and q is the moving average order. The model equation is the following:
+\begin{align*}
+(1 - \phi_1 L - \dots - \phi_p L^p)(1 - dL)^d Y_t = c + \theta_1 \varepsilon_{t-1} + \dots + \theta_q \varepsilon_{t-q} + \beta_1 X_{1,t} + \dots + \beta_k X_{k,t}
+\end{align*}
+Where: 
+\begin{itemize}[leftmargin=*, noitemsep]
+    \item[] $Y_t$ time series value at time $t$
+    \item[] $L$ lag operator, such that $L^k Y_{t-k} = Y_{t-k}$ 
+    \item[] $\phi_1, \dots ,  \phi_p$ autoregressive (AR) parameters
+    \item[] $d$ is the differencing order (integrated part)
+    \item[] $\theta_1, \dots , \theta_q$ moving average (MA) parameters
+    \item[] $c$ optional constant term (intercept)
+    \item[] $\varepsilon_t$ white noise error term at time $t$
+    \item[] $X_{1,t}$, \dots, $X_{k,t}$ are external regressors or exogenous variables at time $t$. 
+    \item[] $\beta_1$, \dots, $\beta_k$ are the coefficients associated with the external regressors.
+\end{itemize}
+
+
 
 ARIMA is a commonly used method for time series forecasting because of its adaptability and interpretability. The model's parameters (p, d, q) are determined through an automated process called auto-ARIMA, which uses algorithmic methods to select the optimal values of p, d, and q based on the minimization of a metric, typically the Akaike Information Criterion (AIC). This automated approach streamlines the model selection process and improves forecasting accuracy.
 
 Additional statistical techniques are available to effectively model data seasonality or employ multivariate modeling. However, these methods fall outside the current scope of the study and will not be examinated.
 
-\subsection*{Linear model}
+\subsection{Linear model}
 
 The initial deep learning model used is an MLP (Multi-Layer Perceptron) architecture. It flattens the first dimension in the data and utilizes all observations, ignoring the temporal sequence, and then attempts to output the sequences. This first method is a baseline for all other models based on deep approaches, which will instead preserve the temporal dimension to make multi-step predictions.
 To ensure simplicity, no activation function was used for the model weights, resulting in a linear activation function. It should also be noted that despite the simplicity of the design, this is the largest network in terms of the number of parameters and the weight of the model (70-100 million parameters).
@@ -146,7 +162,7 @@ To ensure simplicity, no activation function was used for the model weights, res
     \label{fig:linearmodel}
 \end{figure}
 
-\subsection*{LSTM model}
+\subsection{LSTM model}
 
 LSTMs (Long Short-term Memory) networks were introduced in 1997 by Sepp Hochreiter and Jürgen Schmidhuber \cite{hochreiter}. LSTM networks were created with the explicit purpose of addressing the challenge of long-term dependencies encountered by recurrent neural networks (RNNs), primarily stemming from the \textbf{vanishing gradient problem}\footnote{
 In the process of training a recurrent neural network (RNN), the backpropagation algorithm moves in a backward direction from the output layer to the input layer. However, a common issue arises during this progression known as the \textbf{vanishing gradients problem}. As the algorithm descends, the gradients tend to diminish and become shallower, approaching zero. This phenomenon has a significant impact on the weights of the initial or lower layers, rendering them nearly unchanged. Consequently, the gradient descent optimization struggles to converge to the optimum solution. }. Distinguishing themselves from conventional feedforward neural networks, LSTMs incorporate feedback connections. This unique attribute empowers LSTMs to analyze entire sequences of data, such as time series, in a manner that goes beyond treating each point in the sequence in isolation. Instead, LSTMs retain valuable information from preceding data points in the sequence, facilitating the handling of new data points. Consequently, LSTMs excel in processing sequential data, making them particularly effective for tasks involving text, speech, and general time-series analysis.
@@ -160,7 +176,7 @@ The output of the second LSTM layer yields, for each sample within the batch, a 
     \label{fig:lstmmodel}
 \end{figure}
 
-\subsection*{Bidirectional LSTM model}
+\subsection{Bidirectional LSTM model}
 
 
 Bi-LSTM, short for Bidirectional Long Short-Term Memory, represents a variant of recurrent neural networks (RNNs) designed to effectively handle sequential data by processing it in both forward and backward directions.
@@ -177,11 +193,11 @@ The proposed model is similar to the previous one, with the only difference bein
     \label{fig:bilstmmodel}
 \end{figure}
 
-\subsection*{Dense Encoder Decoder model}
+\subsection{Dense Encoder Decoder model}
 
 The model is an autoencoder designed for sequential data. It consists of two blocks, encoder and decoder, each made only of dense layers.
 
-\paragraph*{Encoder Layers}
+\paragraph{Encoder Layers}
 The encoder is responsible for transforming the input data into a more compact representation, often referred to as a latent space or encoding. It performs dimensionality reduction and extracts important features from the input. In the proposed model architecture, the encoder consists of several dense layers with non-linear activation functions (ReLU) and dropout layers. The final output of the encoder is a flattened representation that captures essential features of the input.
 \begin{itemize}[noitemsep]
   \item Dense layer (128 units, ReLU activation)
@@ -189,7 +205,7 @@ The encoder is responsible for transforming the input data into a more compact r
   \item Dense layer (32 units, ReLU activation)
 \end{itemize}
 
-\paragraph*{Decoder Layers}
+\paragraph{Decoder Layers}
 The decoder is tasked with reconstructing the original input data from the compressed representation generated by the encoder. It takes the encoded representation and transforms it back into the original format. In the model, the decoder comprises additional dense layers with non-linear activations and dropout layers. The final layer in the decoder produces the output, which is reshaped to match the dimensions of the original input.
 \begin{itemize}[noitemsep]
   \item Dense layer (64 units, ReLU activation)
@@ -207,7 +223,7 @@ The decoder is tasked with reconstructing the original input data from the compr
 The encoder effectively reduces the dimensionality of the input data, leading to more efficient storage and computation. Additionally, the model is adept at autonomously learning pertinent features from the input data without the need for explicit feature engineering. Dropout layers have been thoughtfully incorporated, serving as a means of regularization to prevent overfitting and augment the model's generalization capabilities.
 One notable drawback lies in the fixed architecture of the model, being relatively simplistic and probably unable to adapt dynamically based on the complexity of the data. Another consideration is the potential loss of information during the compression process within the encoding layer. This is particularly relevant if the encoding dimension is too modest, possibly impacting the model's accuracy in faithfully reconstructing the input.
 
-\subsection*{CONV-LSTM model}
+\subsection{CONV-LSTM model}
 
 The proposed model architecture is a combination of Convolutional Neural Network (CNN) and Long Short-Term Memory (LSTM) layers. 
 In the initial phase, the model processes input sequences of shape (t\textsubscript{past}, n\textsubscript{features}), where each sequence encapsulates t\textsubscript{past} time steps with n\textsubscript{features} features. The temporal dimension is then divided into seven segments, each representing a day, enabling isolated processing for daily patterns.
@@ -226,7 +242,7 @@ However, due to it's complexity, this model could present some drawbacks such as
     \label{fig:convlstm_model}
 \end{figure}
 
-\subsection*{TSMixer model}
+\subsection{TSMixer model}
 
 TSMixer, an abbreviation for Time-Series Mixer, presents an innovative architecture for time-series forecasting, employing a stacked arrangement of multi-layer perceptrons (MLPs). Documented in the paper entitled "TSMixer: An All-MLP Architecture for Time Series Forecasting" \cite{chen2023tsmixer}, this model diverges from prevailing and conventional methodologies in time-series forecasting. In contrast to contemporary approaches relying on high-capacity architectures like recurrent- or attention-based sequential deep learning models, TSMixer adopts a distinctive strategy by incorporating a sequence of multi-layer perceptrons in its design. The primary focus lies in amalgamating time and feature dimensions to enhance predictive accuracy. This discussion dissects the two principal components of TSMixer.
 
@@ -263,7 +279,7 @@ The Temporal Projection stage involves the retransposition of the matrix, follow
 
 The incorporation of this model into Tensorflow, covered in the Medium article "TSMixer: The Latest Forecasting Model by Google" \cite{peixeiro2023tsmixer}, enabled the concatenation of 8 mixer layers preceding the temporal projection. This configuration results in heightened complexity, facilitating the capture of intricate patterns within the data. Notably, this heightened complexity does not come with an excessive increase in the number of parameters. Indeed, the model proves to be highly efficient, particularly when compared to the MLP architecture of the linear model.
 
-\subsection*{Wavelet model}
+\subsection{Wavelet model}
 
 The developed wavelet model is a variant of the model proposed in \cite{WaveletNLSTM}. These two model takes advantage of Wavelet transform to decompose the signal into multiple wavelets, processing the components separatedly to capture more hidden patterns between the data.
 
@@ -281,3 +297,75 @@ In the proposed model, a Daubechies wavelet with one vanishing moment is employe
 \end{figure}
 
 The computational focal point is the Multi-channel LSTM module illustrated in Figure \ref{fig:waveletmodel}. Each component undergoes input to two consecutive LSTM layers, followed by processing through a dense layer for the normalization of individual component outcomes. Subsequently, the outputs from each module are consolidated in a shared layer, serving as the basis for the final predictions pertaining to pollutant levels.
+
+\section{Model Evaluation and Training Details}
+
+\subsection{Metrics}
+
+In this section we will shortly present the two metrics utilized to evaluate the performances of the models
+
+\paragraph{Mean Absolute Error (MAE)}
+MAE, or Mean Absolute Error, is a metric used to evaluate the accuracy of a forecasting model, particularly in the context of time series forecasting. It measures the average absolute difference between the actual and predicted values, providing a straightforward assessment of the magnitude of errors without considering their direction. In the context of time series forecasting, MAE is useful as it treats underpredictions and overpredictions equally. The formula for calculating MAE is given by:
+
+\[
+MAE = \frac{1}{n} \sum_{i=1}^{n} |y_i - \hat{y}_i|
+\]
+
+where:
+\begin{itemize}[noitemsep, leftmargin=*]
+\item[] $n \text{ is the number of observations in the time series,}$
+\item[] $y_i \text{ is the actual value at time } i$, 
+\item[] $\hat{y}_i \text{ is the predicted value at time } i$.
+\end{itemize}
+
+A lower MAE indicates better accuracy, suggesting that the model's predictions are closer to the actual values.
+
+\paragraph{Symmetric Mean Absolute Percentage Error}
+When it comes to measuring accuracy relative to the actual values, the most
+popular metric is MAPE (the mean absolute percentage error). Whilst being very intuitive MAPE degenerates into positive infinity as soon as any of the actual values is zero. Even relatively small actual values can easily explode MAPE towards infinity. So, effectively, MAPE is meaningful only if all observations have relatively large actual values. 
+
+In this work context, sMAPE is preferred because it addresses the issue of scale, making it suitable for comparing accuracy across different time series with varying levels of magnitude, like ours. Moreover, sMAPE overcomes the MAPE limit of giving different weights in case of overestimation and underestimation. The formula for calculating sMAPE is calculated as follows:
+
+\begin{equation}
+sMAPE = \frac{100\%}{n} \sum_{t=1}^{n} \frac{|y_t - \hat{y}_t|}{( |y_t| + |\hat{y}_t| ) / 2}
+\end{equation}
+
+where:
+\begin{itemize}[noitemsep,  leftmargin=*]
+  \item[] \( n \) is the number of observations in the time series.
+  \item[] \( y_t \) is the actual value at time \( t \).
+  \item[] \( \hat{y}_t \) is the predicted value at time \( t \).
+\end{itemize}
+
+The formula calculates the absolute percentage error for each observation in the time series, averages these errors, and then expresses the result as a percentage. The division by \( (|y_t| + |\hat{y}_t|) / 2 \) ensures symmetry in the calculation, emphasizing both overestimation and underestimation errors equally. The sMAPE is expressed as a percentage, but it should not be interpreted as the percentage of the error due to its formulation. A perfect forecast is represented by 0\%, while higher percentages indicate a larger deviation between the actual and predicted values. The sMAPE can reach a maximum value of 200\%, and any value between 100\% and 200\% should be interpreted as an extremely high error.
+
+\subsection{Training configuration}
+
+When defining the training phase, it is important to consider several aspects that can affect the model's performance.
+The first aspect to consider is the definition of a \textbf{loss function}. This function is used to update the weights of the neural network during the training phase, with the goal of minimizing or maximizing its value. In this case, we have chosen the \textbf{Mean Squared Error (MSE)} as the loss function. This is calculated by taking the average of the squared differences between the predicted and actual values (see figure \ref{eq:mse}).
+
+\begin{figure}
+\[MSE = \frac{1}{n} \sum_{t=1}^{n} (y_t - \hat{y}_t)^2\]
+\caption{Mean Squared error formula}
+\label{eq:mse}
+\end{figure}
+
+where:
+\begin{itemize}[noitemsep, leftmargin=*]
+  \item[] \( n \) is the number of observations in the time series,
+  \item[] \( y_t \) represents the actual value at time \( t \),
+  \item[] \( \hat{y}_t \) represents the predicted value at time \( t \), and
+  \item[] The summation is taken over all time points from \( t = 1 \) to \( t = n \).
+\end{itemize}
+
+The second aspect to consider is the \textbf{optimizer} of the neural network and it's starting learning rate. The optimization algorithm employed in the training of forecasting models is \textbf{Adam} \cite{kingma2017adam}, an abbreviation for Adaptive Moment Estimation. Adam represents an adaptive learning rate optimization algorithm that amalgamates the merits of two well-established optimizers, namely Adagrad and RMSprop. Widely recognized as one of the preeminent optimizers for the training of deep neural networks, Adam is characterized by its capacity to dynamically adjust learning rates for individual parameters. This adaptive characteristic facilitates expedited convergence and enhanced optimization outcomes in practical applications. Adam's adaptability makes it ideal for tasks with fluctuating gradient magnitudes, helping to alleviate challenges such as vanishing or exploding gradient problems commonly encountered in deep learning. The optimal \textbf{learning rate} for all networks during testing was \textbf{0.001}.
+
+To improve efficiency and monitoring during training, various \textbf{callbacks} were implemented:
+
+\begin{itemize}
+    \item \textbf{Plot Learning}: Visualizing learning through plots helps understand the evolution of a model. Learning curves, one for training and validation loss, and another one for training and validation MAE, provide insights into performance and identify issues like overfitting or underfitting.
+
+    \item \textbf{Reduce Learning Rate on Plateau}: Dynamic adjustment of the learning rate during training enhances model convergence. This technique involves monitoring a metric (validation loss), reducing the learning rate by a factor of 0.8 if there's no improvement for 3 consecutive epochs, allowing delicate parameter fine-tuning and potential escape from local minima.
+
+    \item \textbf{Early Stopping}: A regularization technique, early stopping halts training when a model's performance on a validation set degrades. Instead of a fixed number of epochs, training stops when there's no further improvement in the validation loss for 5 epochs, preventing overfitting and conserving computational resources.
+\end{itemize}
