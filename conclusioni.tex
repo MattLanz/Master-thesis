@@ -1,0 +1,28 @@
+\chapter{Conclusions}
+
+
+
+
+
+
+
+
+
+
+\section*{Further developments}
+
+The analysis and prediction of pollutant time series is an evolving field, and our current work provides a solid foundation for further development and refinement. Below, we explore some promising directions for the future of our research:
+
+\paragraph{Optimization of Hyperparameters:}
+To enhance the performance of our models, it is crucial to explore a broader range of hyperparameters. Testing various configurations of hyperparameters, including those related to model structure, activation functions, and learning rates, could lead to more robust models that are adaptable to a variety of contexts.
+
+\paragraph{Variability in Data Augmentation:}
+To increase diversity in the data, advanced data augmentation strategies can be employed. Rather than simply adding noise to each epoch, it could be implemented a solution that keeps the original data and generates different versions with varying noise intensities. This involves creating datasets, each characterized by distinct noise levels derived from normal distributions with different standard deviations. The aim of this approach is to increase the diversity of the data, which can improve the model's ability to generalize to unobserved data. However, due to computational limitations, this approach could not be attempted in this context.
+
+\paragraph{Separate Loss Functions:}
+Customizing loss functions for each pollutant is an important step in tailoring forecasts to the specific characteristics of different time series. Introducing separate loss functions could allow models to focus more on the specific dynamics of each pollutant, thereby improving the accuracy of forecasts.
+
+
+\paragraph{Use of Space Data:}
+The integration of spatial data offers a significant opportunity to enhance the accuracy of air pollution forecasts. Analyzing the spatial distribution of pollution sources and surrounding environmental factors can provide additional insights. The use of advanced spatial modeling techniques, such as Spatio-Temporal Graph Neural Networks, enables the prediction of pollutant values at a station by considering influences from surrounding areas. This approach contributes to a more comprehensive view of air quality, allowing for further refinement of predictions and the development of more effective strategies for environmental management and public health.
+

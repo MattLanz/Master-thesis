@@ -4,75 +4,7 @@
 In this final chapter, we will present and discuss the results obtained through the analysis of various metrics. Initially, we will present the outcomes of all models generated in the conducted experiments (see Section \ref{subsec:experiments}), followed by a more detailed analysis of the top-performing models. 
 Furthermore, qualitative representations of predictions will be showcased to enhance the understanding of the models' behavior.
 
-\section{Metrics}
 
-In this section we will shortly present the two metrics utilized to evaluate the performances of the models
-
-\paragraph{Mean Absolute Error (MAE)}
-MAE, or Mean Absolute Error, is a metric used to evaluate the accuracy of a forecasting model, particularly in the context of time series forecasting. It measures the average absolute difference between the actual and predicted values, providing a straightforward assessment of the magnitude of errors without considering their direction. In the context of time series forecasting, MAE is useful as it treats underpredictions and overpredictions equally. The formula for calculating MAE is given by:
-
-\[
-MAE = \frac{1}{n} \sum_{i=1}^{n} |y_i - \hat{y}_i|
-\]
-
-where:
-\begin{itemize}[noitemsep, leftmargin=*]
-\item[] $n \text{ is the number of observations in the time series,}$
-\item[] $y_i \text{ is the actual value at time } i$, 
-\item[] $\hat{y}_i \text{ is the predicted value at time } i$.
-\end{itemize}
-
-A lower MAE indicates better accuracy, suggesting that the model's predictions are closer to the actual values.
-
-\paragraph{Symmetric Mean Absolute Percentage Error}
-When it comes to measuring accuracy relative to the actual values, the most
-popular metric is MAPE (the mean absolute percentage error). Whilst being very intuitive MAPE degenerates into positive infinity as soon as any of the actual values is zero. Even relatively small actual values can easily explode MAPE towards infinity. So, effectively, MAPE is meaningful only if all observations have relatively large actual values. 
-
-In this work context, sMAPE is preferred because it addresses the issue of scale, making it suitable for comparing accuracy across different time series with varying levels of magnitude, like ours. Moreover, sMAPE overcomes the MAPE limit of giving different weights in case of overestimation and underestimation. The formula for calculating sMAPE is calculated as follows:
-
-\begin{equation}
-sMAPE = \frac{100\%}{n} \sum_{t=1}^{n} \frac{|y_t - \hat{y}_t|}{( |y_t| + |\hat{y}_t| ) / 2}
-\end{equation}
-
-where:
-\begin{itemize}[noitemsep,  leftmargin=*]
-  \item[] \( n \) is the number of observations in the time series.
-  \item[] \( y_t \) is the actual value at time \( t \).
-  \item[] \( \hat{y}_t \) is the predicted value at time \( t \).
-\end{itemize}
-
-The formula calculates the absolute percentage error for each observation in the time series, averages these errors, and then expresses the result as a percentage. The division by \( (|y_t| + |\hat{y}_t|) / 2 \) ensures symmetry in the calculation, emphasizing both overestimation and underestimation errors equally. The sMAPE is expressed as a percentage, but it should not be interpreted as the percentage of the error due to its formulation. A perfect forecast is represented by 0\%, while higher percentages indicate a larger deviation between the actual and predicted values. The sMAPE can reach a maximum value of 200\%, and any value between 100\% and 200\% should be interpreted as an extremely high error.
-
-\section{Hyperparameters and training phase}
-
-When defining the training phase, it is important to consider several aspects that can affect the model's performance.
-The first aspect to consider is the definition of a \textbf{loss function}. This function is used to update the weights of the neural network during the training phase, with the goal of minimizing or maximizing its value. In this case, we have chosen the \textbf{Mean Squared Error (MSE)} as the loss function. This is calculated by taking the average of the squared differences between the predicted and actual values (see figure \ref{eq:mse}).
-
-\begin{figure}
-\[MSE = \frac{1}{n} \sum_{t=1}^{n} (y_t - \hat{y}_t)^2\]
-\caption{Mean Squared error formula}
-\label{eq:mse}
-\end{figure}
-
-where:
-\begin{itemize}[noitemsep, leftmargin=*]
-  \item[] \( n \) is the number of observations in the time series,
-  \item[] \( y_t \) represents the actual value at time \( t \),
-  \item[] \( \hat{y}_t \) represents the predicted value at time \( t \), and
-  \item[] The summation is taken over all time points from \( t = 1 \) to \( t = n \).
-\end{itemize}
-
-The second aspect to consider is the \textbf{optimizer} of the neural network and it's starting learning rate. The optimization algorithm employed in the training of forecasting models is \textbf{Adam} \cite{kingma2017adam}, an abbreviation for Adaptive Moment Estimation. Adam represents an adaptive learning rate optimization algorithm that amalgamates the merits of two well-established optimizers, namely Adagrad and RMSprop. Widely recognized as one of the preeminent optimizers for the training of deep neural networks, Adam is characterized by its capacity to dynamically adjust learning rates for individual parameters. This adaptive characteristic facilitates expedited convergence and enhanced optimization outcomes in practical applications. Adam's adaptability makes it ideal for tasks with fluctuating gradient magnitudes, helping to alleviate challenges such as vanishing or exploding gradient problems commonly encountered in deep learning. The optimal \textbf{learning rate} for all networks during testing was \textbf{0.001}.
-
-To improve efficiency and monitoring during training, various \textbf{callbacks} were implemented:
-
-\begin{itemize}
-    \item \textbf{Plot Learning}: Visualizing learning through plots helps understand the evolution of a model. Learning curves, one for training and validation loss, and another one for training and validation MAE, provide insights into performance and identify issues like overfitting or underfitting.
-
-    \item \textbf{Reduce Learning Rate on Plateau}: Dynamic adjustment of the learning rate during training enhances model convergence. This technique involves monitoring a metric (validation loss), reducing the learning rate by a factor of 0.8 if there's no improvement for 3 consecutive epochs, allowing delicate parameter fine-tuning and potential escape from local minima.
-
-    \item \textbf{Early Stopping}: A regularization technique, early stopping halts training when a model's performance on a validation set degrades. Instead of a fixed number of epochs, training stops when there's no further improvement in the validation loss for 5 epochs, preventing overfitting and conserving computational resources.
-\end{itemize}
 
 \section{Performances on the test set}
 The various configurations of the datasets (see Table \ref{tab:dataset_testing}) have been used to test the models performances.
@@ -87,12 +19,12 @@ Overall (see Figure \ref{fig:aarhus_results}), the most performing models seem t
 \begin{figure}[h]
     \centering
     \includegraphics[width=1\linewidth]{images/Aarhus_results.png}
-    \caption{MAE on test set, for each model, divided by pollutant. Hatched bars represent results after training with augmented data, while solid bars represent MAE without augmented data.}
+    \caption{MAE on test set, for each model, divided by pollutant. The rightmost graph shows the average MAE of pollutants for each model. Hatched bars represent results after training with augmented data, while solid bars represent MAE without augmented data.}
     \label{fig:aarhus_results}
 \end{figure}
 
 It is noteworthy that the linear model does not benefit from the augmentation, exhibiting a higher MAE for all pollutants. This can be attributed to the model's simplicity, as it is unable to adapt to the varying noise injection across epochs and generalize predictions. On average, all models except the linear one yield similar results without augmentation. However, augmentation reveals small differences in the results, but since they are below 1 MAE, it's not enough to select the optimal model for this dataset.
-Another aspect that could be noted is that NO2 and PM\textsubscript{10} presents little differences in MAE in two modalities of training, which could indicate a better predictability of the series.
+Another aspect that could be noted is that NO\textsubscript{2} and PM\textsubscript{10} presents little differences in MAE in two modalities of training, which could indicate a better predictability of the series.
 
 \begin{table}[h]
     \centering
@@ -127,7 +59,7 @@ The Seoul dataset yields the best overall results for all models (see Figure \re
 \begin{figure}[h]
     \centering
     \includegraphics[width=1\linewidth]{images/Seoul_results.png}
-    \caption{MAE on test set, for each model, divided by pollutant. Hatched bars represent results after training with augmented data, while solid bars represent MAE without augmented data.}
+    \caption{MAE on test set, for each model, divided by pollutant. The rightmost graph shows the average MAE of pollutants for each model. Hatched bars represent results after training with augmented data, while solid bars represent MAE without augmented data.}
     \label{fig:seoul_results}
 \end{figure}
 
@@ -163,7 +95,7 @@ When compared based on sMAPE, the Madrid dataset produced the worst results. Eve
 \begin{figure}[h]
     \centering
     \includegraphics[width=1\linewidth]{images/Madrid_results.png}
-    \caption{MAE on test set, for each model, divided by pollutant. Hatched bars represent results after training with augmented data, while solid bars represent MAE without augmented data.}
+    \caption{MAE on test set, for each model, divided by pollutant. The rightmost graph shows the average MAE of pollutants for each model. Hatched bars represent results after training with augmented data, while solid bars represent MAE without augmented data.}
     \label{fig:madrid_results}
 \end{figure}
 
@@ -215,10 +147,10 @@ A summary table (Table \ref{tab:baseline-comparison}) is presented below, deline
 \toprule
 \textbf{Model/Dataset} & \textbf{Citypulse} & \textbf{Seoul} & \textbf{Madrid} \\ 
 \midrule
-Baseline & 17.41 & 6.92 & 10.32 \\
+ARIMA & 17.41 & 6.92 & 10.32 \\
 LSTM & 9.18 & 2.51 & 8.31 \\
 Bi-LSTM & 9.33 & 2.68 & 8.25 \\
-TSMixer & 9.34 & 3.71 & \textbf{10.58} \\
+TSMixer \cite{chen2023tsmixer} & 9.34 & 3.71 & \textbf{10.58} \\
 Wavelet & 9.23 & 2.80 & \textbf{14.23} \\
 \bottomrule
 \end{tabular}
@@ -274,7 +206,7 @@ The complexity of this phenomenon cannot be fully explained by the Mean Absolute
 Next, we will provide concise visual representations of out-of-sample forecasts for both the Bi-LSTM and LSTM models. It is important to note that these plots should not be used as the sole criterion for determining the superior performance of a model. Instead, they should be considered a potential tool for gaining a better understanding of how the information extracted from the previous analysis applies in practice.
 
 \paragraph{Citypulse}
-From the plots in Figure \ref{fig:forecasts_aarhus}, we can see that while the Bi-LSTM model (in blue) doesn't fit very well with the predictions, the LSTM model gets better results in O3 and PM2.5 series, but overestimates both PM10 and NO2 series. If repeated, this pattern could explain the difference seen in the distribution of residuals.
+From the plots in Figure \ref{fig:forecasts_aarhus}, we can see that while the Bi-LSTM model (in blue) doesn't fit very well with the predictions, the LSTM model gets better results in O\textsubscript{3} and PM\textsubscript{2.5} series, but overestimates both PM\textsubscript{10} and NO\textsubscript{2} series. If repeated, this pattern could explain the difference seen in the distribution of residuals.
 
 \begin{figure}[h]
     \centering
@@ -285,7 +217,7 @@ From the plots in Figure \ref{fig:forecasts_aarhus}, we can see that while the B
 
 \paragraph{Seoul}
 
-The predictions delineated in Figure \ref{fig:forecasts_seoul} elucidate a marked parity between the two models, evident in their capacity to encapsulate the overarching trend within the series. It is noteworthy that this congruence extends to both O3 and CO predictions, wherein the forecasted trajectories closely mirror those of the original series.
+The predictions delineated in Figure \ref{fig:forecasts_seoul} elucidate a marked parity between the two models, evident in their capacity to encapsulate the overarching trend within the series. It is noteworthy that this congruence extends to both O\textsubscript{3} and CO predictions, wherein the forecasted trajectories closely mirror those of the original series.
 
 \begin{figure}[h]
     \centering
@@ -295,7 +227,7 @@ The predictions delineated in Figure \ref{fig:forecasts_seoul} elucidate a marke
 \end{figure}
 
 \paragraph{Madrid}
-The dataset from Madrid exhibits the most variability, as shown in the plots in Figure \ref{fig:forecasts_Madrid}. However, the models provide a reasonably accurate approximation of future values, particularly the Bi-LSTM model. The SO2 series has the poorest predicted values, as the models fail to accurately predict actual values. It is worth noting that the SO2 series appears to have a step function shape, unlike the other series.
+The dataset from Madrid exhibits the most variability, as shown in the plots in Figure \ref{fig:forecasts_Madrid}. However, the models provide a reasonably accurate approximation of future values, particularly the Bi-LSTM model. The SO\textsubscript{2} series has the poorest predicted values, as the models fail to accurately predict actual values. It is worth noting that the SO\textsubscript{2} series appears to have a step function shape, unlike the other series.
 
 \begin{figure}[h]
     \centering
@@ -304,11 +236,11 @@ The dataset from Madrid exhibits the most variability, as shown in the plots in 
     \label{fig:forecasts_Madrid}
 \end{figure}
 
-\section{Considerations and further developments}
+\section{Results discussion}
 
 In this research, seven models were tested on the three existing datasets. These experiments provided a more comprehensive understanding of the requirements for proficient time series prediction using deep learning models which are often referred to as black-boxes\footnote{This term is used to describe their lack of transparency in the decision-making process}.
 
-\subsection*{Considerations}
+\subsection*{Ablation studies}
 
 The study shows that models that take into account temporal considerations, such as memory mechanisms (as seen in LSTM, Bi-LSTM, and Wavelet models) or features derived from the temporal dimension (as seen in TSMixer), consistently outperform other models in terms of predictive efficacy.
 
@@ -340,23 +272,12 @@ In this chapter we have seen that data augmentation have brought benefits in the
 
 Despite the worstening in the linear model, for which we have already given an explanation in the previous sections, what we see is that overall the data augmentation confirms it's utility in the training process, with also reductions of almost -50\% in MAE. 
 
-\subsection*{Further developments}
-
-The analysis and prediction of pollutant time series is an evolving field, and our current work provides a solid foundation for further development and refinement. Below, we explore some promising directions for the future of our research:
-
-\paragraph{Optimization of Hyperparameters:}
-To enhance the performance of our models, it is crucial to explore a broader range of hyperparameters. Testing various configurations of hyperparameters, including those related to model structure, activation functions, and learning rates, could lead to more robust models that are adaptable to a variety of contexts.
-
-\paragraph{Variability in Data Augmentation:}
-To increase diversity in the data, advanced data augmentation strategies can be employed. Rather than simply adding noise to each epoch, it could be implemented a solution that keeps the original data and generates different versions with varying noise intensities. This involves creating datasets, each characterized by distinct noise levels derived from normal distributions with different standard deviations. The aim of this approach is to increase the diversity of the data, which can improve the model's ability to generalize to unobserved data. However, due to computational limitations, this approach could not be attempted in this context.
-
-\paragraph{Separate Loss Functions:}
-Customizing loss functions for each pollutant is an important step in tailoring forecasts to the specific characteristics of different time series. Introducing separate loss functions could allow models to focus more on the specific dynamics of each pollutant, thereby improving the accuracy of forecasts.
 
 
-\paragraph{Use of Space Data:}
-The integration of spatial data offers a significant opportunity to enhance the accuracy of air pollution forecasts. Analyzing the spatial distribution of pollution sources and surrounding environmental factors can provide additional insights. The use of advanced spatial modeling techniques, such as Spatio-Temporal Graph Neural Networks, enables the prediction of pollutant values at a station by considering influences from surrounding areas. This approach contributes to a more comprehensive view of air quality, allowing for further refinement of predictions and the development of more effective strategies for environmental management and public health.
 
+
+
+% VA NELLE CONCLUSIONI
 
 
 
