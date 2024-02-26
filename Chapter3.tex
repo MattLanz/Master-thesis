@@ -17,9 +17,9 @@ Feature selection and design in a machine learning model involves choosing the m
 \textbf{Feature selection} is the process of selecting a subset of relevant features for use in building the model.
 Feature selection techniques are used for several reasons, including simplifying models to make them more easily interpretable, reducing training times, and avoiding the curse of dimensionality.
 In our case, feature selection is utilized to eliminate redundant exogenous variables based on their correlation.
-For example, in CityPulse, feelslike and occupied variables are removed, while temp and occupancy are kept. In Seoul and Madrid, rain is kept and prec is removed
+For example, in CityPulse, feelslike and occupied variables are removed, while temp and occupancy are kept. In Seoul and Madrid, rain is kept and prec is removed.
 On the other hand, \textbf{feature engineering} involves extracting features from raw data to support training.
-In this case, feature engineering is used to extract \textbf{date-based features} such as the day of the week, month of the year, and time of day, which can be valuable for forecasting. As we have observed, many pollutants tend to have lower values during weekends. Therefore, incorporating the day of the week as a feature can improve the accuracy of the forecasting model.
+In this case, feature engineering is utilized to extract \textbf{date-based features}, such as the day of the week, month of the year, and time of day. These features can be valuable for forecasting. As we have observed, many pollutants tend to have lower values during weekends. Therefore, incorporating the day of the week as a feature can improve the accuracy of the forecasting model.
 
 
 After the extraction of the date-based features, these are converted to multiple one-hot encoded variables. \textbf{One-hot encoding} is a technique that encodes using a dummy encoding scheme. This means creating a binary column for each category and the result is a sparse matrix of 0s and 1s, based on the original value of the column (example in Figure \ref{fig:one-hot}).
@@ -32,7 +32,7 @@ After the extraction of the date-based features, these are converted to multiple
 
 \subsection{Data scaling}
 
-Data scaling is the process of \textbf{adjusting the range of values} in a dataset to ensure that all variables contribute equally to the analysis. It prevents certain features from dominating others due to differences in their scales. Common scaling techniques include Min-Max scaling, where values are normalized to a specific range, and Z-score normalization (formula found in figure \ref{eq:standardization}), which standardizes data to have a mean of 0 and a standard deviation of 1. The latter is used in this work.
+Data scaling is the process of \textbf{adjusting the range of values} in a dataset to ensure that all variables contribute equally to the analysis. It prevents certain features from dominating others due to differences in their scales. Common scaling techniques include Min-Max scaling, where values are normalized to a specific range, and Z-score normalization (formula found in Figure \ref{eq:standardization}), which standardizes data to have a mean of 0 and a standard deviation of 1. The latter is used in this work.
 
 \begin{figure}
 \[ z_{ij} = \frac{{x_{ij} - \bar{x}_j}}{{\sigma_j}} \]
@@ -79,7 +79,7 @@ Where:
 
 \subsection{Data splitting}
 
-The research question of this work involves a multivariate multi-step forecasting task. In practical terms, this means using past observations at time $t_{past}$ to predict a future time horizon at $t_{future}$. Typically, the time window used for $t_{past}$ is greater than or equal to the time window used for $t_{future}$.
+The research question of this work involves a multivariate multi-step forecasting task. In practical terms, this means using past observations at time $t_{past}$ to predict $t_{future}$ future observations. Typically, the time window used for $t_{past}$ is greater than or equal to the time window used for $t_{future}$.
 In our case, we employ a technique that transforms the dataset from unsupervised to supervised. A dataset for supervised learning contains one or more target variables, each assigned to a set of independent variables.
 In all experiments, we used 168 past observations (24 observations per day for 7 days) to forecast 24 future observations (1 day).
 
@@ -90,7 +90,7 @@ Regarding the data used for model training, it was divided into 3 temporally ord
     \item Test data (10\% of the data)
 \end{itemize}
 
-It is worth noting that for time series forecasting tasks, it is critical that the data sampling for each set is not random, but rather that the data is extracted in chronological order. This is to prevent the model from being exposed to data that will later need to be forecasted in the validation and test sets, ensuring results that are faithful to real-world scenarios.
+For time series forecasting tasks, it is crucial that the data sampling for each set is not random. Instead, the data should be extracted in chronological order. This is to prevent the model from being exposed to data that will later need to be forecasted in the validation and test sets, ensuring results that are faithful to real-world scenarios.
 
 The introduction of noise in the data takes place online during the training phase, and it is added to each batch individually.
 
@@ -133,14 +133,14 @@ The Autoregressive Integrated Moving Average (ARIMA) model is a traditional time
 \end{align*}
 Where: 
 \begin{itemize}[leftmargin=*, noitemsep]
-    \item[] $Y_t$ time series value at time $t$
-    \item[] $L$ lag operator, such that $L^k Y_{t-k} = Y_{t-k}$ 
-    \item[] $\phi_1, \dots ,  \phi_p$ autoregressive (AR) parameters
+    \item[] $Y_t$ is the time series value at time $t$
+    \item[] $L$ is the lag operator, such that $L^k Y_{t-k} = Y_{t-k}$ 
+    \item[] $\phi_1, \dots ,  \phi_p$ are the autoregressive (AR) parameters
     \item[] $d$ is the differencing order (integrated part)
-    \item[] $\theta_1, \dots , \theta_q$ moving average (MA) parameters
-    \item[] $c$ optional constant term (intercept)
-    \item[] $\varepsilon_t$ white noise error term at time $t$
-    \item[] $X_{1,t}$, \dots, $X_{k,t}$ are external regressors or exogenous variables at time $t$. 
+    \item[] $\theta_1, \dots , \theta_q$ is the  moving average (MA) parameters
+    \item[] $c$ is the optional constant term (intercept)
+    \item[] $\varepsilon_t$ is the white noise error term at time $t$
+    \item[] $X_{1,t}$, \dots, $X_{k,t}$ are  the external regressors or exogenous variables at time $t$. 
     \item[] $\beta_1$, \dots, $\beta_k$ are the coefficients associated with the external regressors.
 \end{itemize}
 
@@ -216,7 +216,7 @@ The decoder is tasked with reconstructing the original input data from the compr
 \begin{figure}
     \centering
     \includegraphics[width=1\linewidth]{images/model architectures/denseencdecmodel.png}
-    \caption{Proposed Dense encoder-decoder architecture}
+    \caption{Proposed Dense Encoder Decoder architecture}
     \label{fig:denseencdecmodel}
 \end{figure}
 
@@ -244,7 +244,7 @@ However, due to it's complexity, this model could present some drawbacks such as
 
 \subsection{TSMixer model}
 
-TSMixer, an abbreviation for Time-Series Mixer, presents an innovative architecture for time-series forecasting, employing a stacked arrangement of multi-layer perceptrons (MLPs). Documented in the paper entitled "TSMixer: An All-MLP Architecture for Time Series Forecasting" \cite{chen2023tsmixer}, this model diverges from prevailing and conventional methodologies in time-series forecasting. In contrast to contemporary approaches relying on high-capacity architectures like recurrent- or attention-based sequential deep learning models, TSMixer adopts a distinctive strategy by incorporating a sequence of multi-layer perceptrons in its design. The primary focus lies in amalgamating time and feature dimensions to enhance predictive accuracy. This discussion dissects the two principal components of TSMixer.
+TSMixer, an abbreviation for Time-Series Mixer, presents an innovative architecture for time-series forecasting, employing a stacked arrangement of multi-layer perceptrons (MLPs). Documented in the paper entitled ``TSMixer: An All-MLP Architecture for Time Series Forecasting'' \cite{chen2023tsmixer}, this model diverges from prevailing and conventional methodologies in time-series forecasting. In contrast to contemporary approaches relying on high-capacity architectures like recurrent- or attention-based sequential deep learning models, TSMixer adopts a distinctive strategy by incorporating a sequence of multi-layer perceptrons in its design. The primary focus lies in amalgamating time and feature dimensions to enhance predictive accuracy. This discussion dissects the two principal components of TSMixer.
 
 \paragraph{Mixer Layer}
 
@@ -257,7 +257,7 @@ The Mixer Layer serves as the locus for time mixing and feature mixing, encapsul
     \label{fig:tsmixer-mixing-layer}
 \end{figure}
 
-The diagram above illustrates the mechanics of time mixing, wherein the MLP encompasses a fully connected layer, followed by the Rectified Linear Unit (ReLU) activation function, and a dropout layer. The input matrix, with rows representing time and columns representing features, undergoes transposition to facilitate the application of the MLP in the time domain, shared across all features. This unit is responsible for learning temporal patterns. Subsequent to exiting the time mixing unit, the matrix undergoes transposition once again before being directed to the feature mixing unit. The feature mixing unit comprises two MLPs and, being applied in the feature domain, is shared across all time steps. Noteworthy is the absence of the need for transposition, as the features are inherently aligned along the horizontal axis. Notably, both mixers incorporate normalization layers and residual connections. The latter aids the model in acquiring more profound representations of the data while maintaining computational efficiency, and normalization proves to be a conventional technique enhancing the training of deep learning models. Upon completion of the mixing process, the output proceeds to the temporal projection stage.
+The diagram above illustrates the mechanics of time mixing, wherein the MLP encompasses a fully connected layer, followed by the ReLU activation function, and a dropout layer. The input matrix, with rows representing time and columns representing features, undergoes transposition to facilitate the application of the MLP in the time domain, shared across all features. This unit is responsible for learning temporal patterns. Subsequent to exiting the time mixing unit, the matrix undergoes transposition once again before being directed to the feature mixing unit. The feature mixing unit comprises two MLPs and, being applied in the feature domain, is shared across all time steps. Noteworthy is the absence of the need for transposition, as the features are inherently aligned along the horizontal axis. Notably, both mixers incorporate normalization layers and residual connections. The latter aids the model in acquiring more profound representations of the data while maintaining computational efficiency, and normalization proves to be a conventional technique enhancing the training of deep learning models. Upon completion of the mixing process, the output proceeds to the temporal projection stage.
 
 \paragraph{Temporal Projection}
 
@@ -277,7 +277,7 @@ The Temporal Projection stage involves the retransposition of the matrix, follow
     \label{fig:tsmixer-whole architecture}
 \end{figure}
 
-The incorporation of this model into Tensorflow, covered in the Medium article "TSMixer: The Latest Forecasting Model by Google" \cite{peixeiro2023tsmixer}, enabled the concatenation of 8 mixer layers preceding the temporal projection. This configuration results in heightened complexity, facilitating the capture of intricate patterns within the data. Notably, this heightened complexity does not come with an excessive increase in the number of parameters. Indeed, the model proves to be highly efficient, particularly when compared to the MLP architecture of the linear model.
+The Tensorflow framework was used to implement the model. The proposed model concatenates 8 mixer layers before the temporal projection. This configuration results in heightened complexity, facilitating the capture of intricate patterns within the data. Notably, this heightened complexity does not come with an excessive increase in the number of parameters. Indeed, the model proves to be highly efficient, particularly when compared to the MLP architecture of the linear model.
 
 \subsection{Wavelet model}
 
@@ -342,7 +342,7 @@ The formula calculates the absolute percentage error for each observation in the
 \subsection{Training configuration}
 
 When defining the training phase, it is important to consider several aspects that can affect the model's performance.
-The first aspect to consider is the definition of a \textbf{loss function}. This function is used to update the weights of the neural network during the training phase, with the goal of minimizing or maximizing its value. In this case, we have chosen the \textbf{Mean Squared Error (MSE)} as the loss function. This is calculated by taking the average of the squared differences between the predicted and actual values (see figure \ref{eq:mse}).
+The first aspect to consider is the definition of a \textbf{loss function}. This function is used to update the weights of the neural network during the training phase, with the goal of minimizing or maximizing its value. In this case, the loss function chosen is the \textbf{Mean Squared Error} (MSE). It is calculated by taking the average of the squared differences between the predicted and actual values (refer to Figure \ref{eq:mse}).
 
 \begin{figure}
 \[MSE = \frac{1}{n} \sum_{t=1}^{n} (y_t - \hat{y}_t)^2\]
@@ -367,5 +367,5 @@ To improve efficiency and monitoring during training, various \textbf{callbacks}
 
     \item \textbf{Reduce Learning Rate on Plateau}: Dynamic adjustment of the learning rate during training enhances model convergence. This technique involves monitoring a metric (validation loss), reducing the learning rate by a factor of 0.8 if there's no improvement for 3 consecutive epochs, allowing delicate parameter fine-tuning and potential escape from local minima.
 
-    \item \textbf{Early Stopping}: A regularization technique, early stopping halts training when a model's performance on a validation set degrades. Instead of a fixed number of epochs, training stops when there's no further improvement in the validation loss for 5 epochs, preventing overfitting and conserving computational resources.
+    \item \textbf{Early Stopping}: A regularization technique, early stopping halts training when a model's performance on a validation set degrades. Instead of training for a fixed number of epochs, training stops when there's no further improvement in the validation loss for 5 epochs, preventing overfitting and conserving computational resources.
 \end{itemize}

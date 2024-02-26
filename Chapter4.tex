@@ -6,13 +6,13 @@ Furthermore, qualitative representations of predictions will be showcased to enh
 
 
 
-\section{Performances on the test set}
-The various configurations of the datasets (see Table \ref{tab:dataset_testing}) have been used to test the models performances.
+\section{Performance on the test set}
+The various configurations of the datasets (see Table \ref{tab:dataset_testing}) have been used to test the models performance.
 In this section, with the help of plots, we will analyze the MAE on the test set, dividing it by pollutant, in order to better understand which pollutants' behaviours were better learned  by the models. To evaluate MAE and sMAPE, predictions and the target variables have been rescaled to the original scale.
 
 \subsection{Citypulse}
 
-Of course, as we would expect, results in Citypulse dataset for Ozone and PM\textsubscript{2.5} are almost identical for all models.
+Of course, as we would expect, results on the Citypulse dataset for Ozone and PM\textsubscript{2.5} are almost identical for all models.
 Overall (see Figure \ref{fig:aarhus_results}), the most performing models seem to be both LSTMs models, the Dense Encoder Decoder Network, and the Wavelet and TSMixer models. 
 
 
@@ -24,7 +24,7 @@ Overall (see Figure \ref{fig:aarhus_results}), the most performing models seem t
 \end{figure}
 
 It is noteworthy that the linear model does not benefit from the augmentation, exhibiting a higher MAE for all pollutants. This can be attributed to the model's simplicity, as it is unable to adapt to the varying noise injection across epochs and generalize predictions. On average, all models except the linear one yield similar results without augmentation. However, augmentation reveals small differences in the results, but since they are below 1 MAE, it's not enough to select the optimal model for this dataset.
-Another aspect that could be noted is that NO\textsubscript{2} and PM\textsubscript{10} presents little differences in MAE in two modalities of training, which could indicate a better predictability of the series.
+Another aspect that could be noted is that NO\textsubscript{2} and PM\textsubscript{10} present little differences in MAE in two modalities of training, which could indicate a better predictability of the series.
 
 \begin{table}[h]
     \centering
@@ -32,17 +32,17 @@ Another aspect that could be noted is that NO\textsubscript{2} and PM\textsubscr
         \toprule
         \textbf{Model} & \textbf{MAE} & \textbf{sMAPE} \\ 
         \midrule
-        Linear & 23,65 & 53.56\% \\
-        LSTM & 9,18 & 27.94\% \\
-        Bi-LSTM & 9,33 & 27.71\% \\
-        \textbf{Dense encoder decoder} & \textbf{8,38} & \textbf{26.38}\% \\
-        CONV-LSTM & 11,97 & 34.76\% \\
-        TSMixer & 9,34 & 27.81\% \\
-        Wavelet & 9,23 & 28.7\% \\ 
+        Linear & 23.65 & 53.56\% \\
+        LSTM & 9.18 & 27.94\% \\
+        Bi-LSTM & 9.33 & 27.71\% \\
+        \textbf{Dense Encoder Decoder} & \textbf{8,38} & \textbf{26.38}\% \\
+        CONV-LSTM & 11.97 & 34.76\% \\
+        TSMixer & 9.34 & 27.81\% \\
+        Wavelet & 9.23 & 28.7\% \\ 
         \bottomrule
         \end{tabular}
-        \caption{Citypulse models average performances, on augmented dataset models.}
-        \label{tab:Citypulse performances}
+        \caption{Citypulse models average performance, on augmented dataset models.}
+        \label{tab:Citypulse performance}
 \end{table}
 
 
@@ -63,7 +63,7 @@ The Seoul dataset yields the best overall results for all models (see Figure \re
     \label{fig:seoul_results}
 \end{figure}
 
-The minimum average MAE encountered is 2.51, in the LSTM model, as we can see in Table \ref{tab:Seoul performances}.
+The minimum average MAE encountered is 2.51, in the LSTM model, as we can see in Table \ref{tab:Seoul performance}.
 The LSTM, Bi-LSTM, and Wavelet models are the top performers, with a MAE of under 3 and a sMAPE of around 33\%. This is a favorable outcome for real-world applications.
 
 \begin{table}[h]
@@ -75,18 +75,18 @@ The LSTM, Bi-LSTM, and Wavelet models are the top performers, with a MAE of unde
         Linear & 10.55 & 96.93\% \\
         \textbf{LSTM} & \textbf{2.51} & \textbf{33.49}\% \\
         Bi-LSTM & 2.68 & \textbf{33.49}\% \\
-        Dense encoder decoder & 5.17 & 51.95\% \\
+        Dense Encoder Decoder & 5.17 & 51.95\% \\
         CONV-LSTM & 3.60 & 44.18\% \\
         TSMixer & 3.71 & 41.58\% \\
         Wavelet & 2.80 & 33.68\% \\
         \bottomrule
     \end{tabular}
-    \caption{Seoul models average performances, on augmented dataset models.}
-    \label{tab:Seoul performances}
+    \caption{Seoul models average performance, on augmented dataset models.}
+    \label{tab:Seoul performance}
 \end{table}
 
 The linear model exhibits a comparable pattern to the one found in the Citypulse data, which emphasizes its limitations. Despite achieving satisfactory results even in the absence of augmentation, attributed to the substantial volume of training data, the introduction of augmentation enhances performance by an additional 2 points across the top-three models. This reaffirms the potential of augmentation, even in scenarios where ample training data is already available.
-Unlike to what is seen in Aarhus dataset, the Dense Encoder-Decoder architecture does not perform as well as the other models. This result suggests weaknesses in learning long and complex patterns.
+Unlike to what is seen in Aarhus dataset, the Dense Encoder Decoder architecture does not perform as well as the other models. This result suggests weaknesses in learning long and complex patterns.
 
 \subsection{Madrid}
 
@@ -99,8 +99,8 @@ When compared based on sMAPE, the Madrid dataset produced the worst results. Eve
     \label{fig:madrid_results}
 \end{figure}
 
-Once again, the Dense Encoder-Decoder model, which previously achieved the best MAE in the Aarhus dataset, is now among the three worst-performing models.
-The difficulty encountered can be attributed to the quality of the Madrid dataset, which contains a significant amount of missing data and numerous outliers (as evidenced by the spikes observed in Section \ref{subsec:madrid-eda}). Furthermore, data augmentation does not significantly improve the results, as observed in other datasets, except for the LSTM and Bi-LSTM models, which consistently outperform other models in this experiment.
+Once again, the Dense Encoder Decoder model, which previously achieved the best MAE in the Aarhus dataset, is now among the three worst-performing models.
+The difficulty encountered by the models can be attributed to the quality of the Madrid dataset, which contains a significant amount of missing data and numerous outliers (as evidenced by the spikes observed in Section \ref{subsec:madrid-eda}). Furthermore, data augmentation does not significantly improve the results, as observed in other datasets, except for the LSTM and Bi-LSTM models, which consistently outperform other models in this experiment.
 
 \begin{table}[]
     \centering
@@ -111,21 +111,21 @@ The difficulty encountered can be attributed to the quality of the Madrid datase
         Linear & 13.17 & 64.3\% \\
         LSTM & 8.31 & 45.03\% \\
        \textbf{Bi-LSTM}& \textbf{8.25} & \textbf{43.95}\% \\
-        Dense encoder decoder & 12.66 & 58.49\% \\
+        Dense Encoder Decoder & 12.66 & 58.49\% \\
         CONV-LSTM & 11.44 & 52.23\% \\
         TSMixer & 10.58 & 51.72\% \\
         Wavelet & 14.23 & 58.02\% \\ 
         \bottomrule
     \end{tabular}
-    \caption{Madrid models average performances, on augmented dataset models.}
-    \label{tab:Madrid_performances}
+    \caption{Madrid models average performance, on augmented dataset models.}
+    \label{tab:Madrid_performance}
 \end{table}
 
-The obtained results thus demonstrate a lower predictability of the Madrid dataset, highlighting the necessity for high data quality as well as a substantial amount of data (bearing in mind that in the case of Madrid a 3-year observation period was available).
+The obtained results thus demonstrate a lower predictability on the Madrid dataset, highlighting the necessity for high data quality as well as a substantial amount of data (bearing in mind that in the case of Madrid a 3-year observation period was available).
 
 \section{Best models comparison}
 
-While in the previous section we have showed the performances of all tested models, in this section we will shortly analyze some aspects of the top performing models that should help us to pick the best one for our use case. Choosen top-performing models are the following:
+While in the previous section we have showed the performance of all tested models, in this section we will shortly analyze some aspects of the top performing models that should help us to pick the best one for our use case. Choosen top-performing models are the following:
 \begin{itemize}
     \item LSTM model
     \item Bi-LSTM model
@@ -147,14 +147,14 @@ A summary table (Table \ref{tab:baseline-comparison}) is presented below, deline
 \toprule
 \textbf{Model/Dataset} & \textbf{Citypulse} & \textbf{Seoul} & \textbf{Madrid} \\ 
 \midrule
-ARIMA & 17.41 & 6.92 & 10.32 \\
+ARIMA \cite{box1970time} & 17.41 & 6.92 & 10.32 \\
 LSTM & 9.18 & 2.51 & 8.31 \\
 Bi-LSTM & 9.33 & 2.68 & 8.25 \\
 TSMixer \cite{chen2023tsmixer} & 9.34 & 3.71 & \textbf{10.58} \\
 Wavelet & 9.23 & 2.80 & \textbf{14.23} \\
 \bottomrule
 \end{tabular}
-\caption{MAE table comparison with baseline.}
+\caption{MAE table comparison with baseline. We can see that the TSMixer and Wavelet models have larger MAE than the ARIMA baseline in the Madrid dataset}
 \label{tab:baseline-comparison}
 \end{table}
 
@@ -162,7 +162,7 @@ Evidently, the selected models demonstrate superior performance relative to the 
 
 \subsection{Error over time}
 
-The forecast horizon is of course a choice that influences the performances of the models. In the case of one-step-ahead, the model would use the past observations to predict one observation, which would be a quite easy task. During multi-step forecast, the task becomes tricky for two reasons:
+The choice of forecast horizon significantly impacts model performance. For one-step-ahead predictions, the model uses past observations to predict a single future observation, which is a relatively simple task. During multi-step forecast, the task becomes tricky for two reasons:
 \begin{enumerate}
     \item The model has to use the same amount of past observations to predict a longer sequence of observations
     \item The error in one observation can propagate to the successive ones
@@ -182,7 +182,7 @@ Commencing with the Citypulse dataset, a discernible trend is observed, as antic
 
 In the Seoul dataset, results are more transparent and interpretable. While the Wavelet model demonstrates superior predictive capabilities in the initial two observations, it is noteworthy that the error rapidly escalates until approximately the eighth observation. Subsequently, it exhibits a slow and linear growth. In contrast, the curves of the LSTM and Bi-LSTM models, which achieved the best results in terms of both MAE and sMAPE, are nearly overlapping. These models demonstrate a gradual linear worsening, with a minimal increase at the maximum forecast distance. On the other hand, the TSMixer model, despite starting with a relatively low error of approximately 2, deteriorates rapidly towards an error at the maximum distance equal to 5.
 
-In the Madrid dataset, the performance of the LSTM and Bi-LSTM models is reaffirmed, as the error increases gradually with temporal distance. The TSMixer model also achieves an intermediate result, albeit inferior to the baseline (refer to Section \ref{subsec:baseline_comparison}). Conversely, the Wavelet model exhibits a peculiar trend. Despite a slight improvement, the error increases with temporal distance, deviating from the expected decrease. This outcome may be attributed more to chance than to a recognizable pattern.\\
+In the Madrid dataset, the performance of the LSTM and Bi-LSTM models is reaffirmed, as the error increases gradually with temporal distance. The TSMixer model also achieves an intermediate result, albeit inferior to the baseline (refer to Section \ref{subsec:baseline_comparison}). Conversely, the Wavelet model exhibits a peculiar trend. Despite a slight improvement, the error decreases with temporal distance, deviating from the expected increase. This outcome may be attributed more to chance than to a recognizable pattern.\\
 
 After these considerations, the analysis will focus on the Bi-LSTM and the LSTM models, and we will then analyze the errors and will show some qualitative plots to better understand the behaviours of the two models.
 
@@ -201,7 +201,7 @@ Figure \ref{fig:kde_residuals} illustrates the residual distributions for both L
 
 The results show differences between the models, especially in the CityPulse dataset. The Madrid and Seoul datasets have similar results for both the Bi-LSTM and LSTM models. In the CityPulse dataset, while the Bi-LSTM model's performance curve is skewed but mostly normal, the LSTM model shows a distribution with two peaks: one near zero and the other at -1.2. This indicates that the model accurately predicts some values while overestimating others.
 
-The complexity of this phenomenon cannot be fully explained by the Mean Absolute Error (MAE), highlighting the need for this analysis. It can be argued that the accuracy of the first peak predictions compensates for the other peak prediction in the MAE calculation, resulting in a close approximation of the Bi-LSTM model's performance.
+The MAE alone cannot fully explain the complexity of this phenomenon, emphasizing the necessity of this analysis. It can be argued that the accuracy of the first peak predictions compensates for the other peak prediction in the MAE calculation, resulting in a close approximation of the Bi-LSTM model's performance.
 
 Next, we will provide concise visual representations of out-of-sample forecasts for both the Bi-LSTM and LSTM models. It is important to note that these plots should not be used as the sole criterion for determining the superior performance of a model. Instead, they should be considered a potential tool for gaining a better understanding of how the information extracted from the previous analysis applies in practice.
 
@@ -211,7 +211,7 @@ From the plots in Figure \ref{fig:forecasts_aarhus}, we can see that while the B
 \begin{figure}[h]
     \centering
     \includegraphics[width=1\linewidth]{images/forecasts_aarhus.png}
-    \caption{Forecast of one time window extracted from the test set of Seoul dataset. Both models forecasts are displayed, LSTM (in red) and Bi-LSTM (in blue)}
+    \caption{Forecast of one time window extracted from the test set of Citypulse dataset. Both models forecasts are displayed, LSTM (in red) and Bi-LSTM (in blue)}
     \label{fig:forecasts_aarhus}
 \end{figure}
 
@@ -236,15 +236,9 @@ The dataset from Madrid exhibits the most variability, as shown in the plots in 
     \label{fig:forecasts_Madrid}
 \end{figure}
 
-\section{Results discussion}
+\subsection{Ablation studies}
 
-In this research, seven models were tested on the three existing datasets. These experiments provided a more comprehensive understanding of the requirements for proficient time series prediction using deep learning models which are often referred to as black-boxes\footnote{This term is used to describe their lack of transparency in the decision-making process}.
-
-\subsection*{Ablation studies}
-
-The study shows that models that take into account temporal considerations, such as memory mechanisms (as seen in LSTM, Bi-LSTM, and Wavelet models) or features derived from the temporal dimension (as seen in TSMixer), consistently outperform other models in terms of predictive efficacy.
-
-Various configurations of the data fed into the training phase have been tested:
+Various configurations of the data fed into the training phase have been tested, in order to understand the requirements of the developed models and their effectiveness in various scenarios:
 
 \paragraph{Historical data volume influence}
 
@@ -275,9 +269,6 @@ Despite the worstening in the linear model, for which we have already given an e
 
 
 
-
-
-% VA NELLE CONCLUSIONI
 
 
 

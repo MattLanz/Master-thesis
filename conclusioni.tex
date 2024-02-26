@@ -1,28 +1,25 @@
-\chapter{Conclusions}
+\chapter*{Conclusions}
+\addcontentsline{toc}{chapter}{Conclusions}
 
 
+Our goal in this thesis was to investigate and test some techniques for predicting pollutant concentration in some cities. This is to enable decision makers to take actions to protect public health and reduce air pollution in the city. To do this, we tested several deep models on three datasets. As a first step, we sought to understand the nature of the pollutant datasets by deeply delving into the patterns that characterize the datasets, which are intrinsically complex data and require more attention in modeling and preparation. The second part of the thesis focused on developing and training prediction models. Seven models were tested, including six proposed models and one implemented from the state-of-the-art. The use of different architectures allowed us to explore a wide range of possible solutions, giving greater significance to the results obtained.
 
+\section*{Experimental results}
 
+The conducted experiments provided a deeper understanding of the requirements for obtaining the best time series forecasts using deep learning models. These models, which are often penalized due to their limited interpretability, were specifically trained to predict the next day's data based on the one-week time series.
+The substantial heterogeneity among pollutant trends, particularly with respect to their variability, presents a significant challenge to modeling efforts that attempt to capture these diverse trends.
 
+The results analysis indicated superior predictive performance in models incorporating temporal aspects. This encompasses models with memory mechanisms, exemplified by the proposed LSTM, Bi-LSTM, and Wavelet models, as well as those utilizing features derived from the temporal dimension, as demonstrated by the TSMixer model, which was implemented from the state-of-the-art. In addition, the effectiveness of data augmentation was confirmed both during the training phase and in terms of prediction error. This is due to the fact that the introduction of random noise helps the models to better generalize the trend of the time series, thus improving the accuracy of the forecasts.
 
-
-
-
+The results obtained on the three datasets confirm the superiority of the LSTM and Bi-LSTM models in the prediction task, with an sMAPE of 27.94\% and 27.71\% respectively in the Citypulse dataset, 33.49\% for both in the Seoul dataset, and 45.03\% and 43.95\% in the Madrid dataset. Furthermore, an analysis of the obtained results reinforces the criticality of the data collection phase. Notably, the Seoul dataset, demonstrably exhibiting the highest data quality within the study, also achieved the lowest Mean Absolute Error (MAE) values.
 
 \section*{Further developments}
 
-The analysis and prediction of pollutant time series is an evolving field, and our current work provides a solid foundation for further development and refinement. Below, we explore some promising directions for the future of our research:
+The analysis and prediction of pollutant time series is a developing field. Our current work provides a foundation for further refinement. In the future, we plan to improve the robustness of our model by experimenting with various configurations in the model's architecture. This may involve testing deeper or simpler networks, particularly in the LSTM, Bi-LSTM, and TSMixer networks.
 
-\paragraph{Optimization of Hyperparameters:}
-To enhance the performance of our models, it is crucial to explore a broader range of hyperparameters. Testing various configurations of hyperparameters, including those related to model structure, activation functions, and learning rates, could lead to more robust models that are adaptable to a variety of contexts.
+Additionally, we plan to address data variability through advanced augmentation strategies, generating datasets with varying noise intensities. Although this technique could enhance the model's generalization and performance, it was not feasible to implement it due to computational limitations.
+Customising loss functions for each pollutant is a crucial step as it allows models to focus on the specific dynamics of each pollutant, thereby improving forecast accuracy.
 
-\paragraph{Variability in Data Augmentation:}
-To increase diversity in the data, advanced data augmentation strategies can be employed. Rather than simply adding noise to each epoch, it could be implemented a solution that keeps the original data and generates different versions with varying noise intensities. This involves creating datasets, each characterized by distinct noise levels derived from normal distributions with different standard deviations. The aim of this approach is to increase the diversity of the data, which can improve the model's ability to generalize to unobserved data. However, due to computational limitations, this approach could not be attempted in this context.
+Moreover, integrating spatial data presents a significant opportunity to enhance air pollution forecast accuracy. By analysing the spatial distribution of pollution sources and surrounding environmental factors, additional insights can be gained. Advanced spatial modelling techniques, such as Spatio-Temporal Graph Neural Networks, can predict pollutant values at a station by considering influences from surrounding areas. This comprehensive approach refines predictions and develops more effective strategies for environmental management and public health.
 
-\paragraph{Separate Loss Functions:}
-Customizing loss functions for each pollutant is an important step in tailoring forecasts to the specific characteristics of different time series. Introducing separate loss functions could allow models to focus more on the specific dynamics of each pollutant, thereby improving the accuracy of forecasts.
-
-
-\paragraph{Use of Space Data:}
-The integration of spatial data offers a significant opportunity to enhance the accuracy of air pollution forecasts. Analyzing the spatial distribution of pollution sources and surrounding environmental factors can provide additional insights. The use of advanced spatial modeling techniques, such as Spatio-Temporal Graph Neural Networks, enables the prediction of pollutant values at a station by considering influences from surrounding areas. This approach contributes to a more comprehensive view of air quality, allowing for further refinement of predictions and the development of more effective strategies for environmental management and public health.
-
+Finally, in this analysis, we aim to interpret the network's behaviour through the analysis of results and scenarios. However, to increase the interpretability of models and gain confidence in their predictions for real-world scenarios, several techniques are available. It is critical to understand more about the model to facilitate the application of predictions.
