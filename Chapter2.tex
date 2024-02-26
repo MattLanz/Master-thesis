@@ -6,9 +6,9 @@ As mentioned in the previous chapter, one of the main challenges in analyzing po
 It is important to consider outliers, as they may represent either actual observations of a significant increase in pollutants or random errors in the sensor. The location of the sensor is also a crucial factor that can affect the average values of the series. 
 To account for this variability in the data based on location, three datasets have been selected for analysis, namely:
 \begin{itemize}
-    \item Citypulse (containing data from Aarhus, Denmark),
-    \item Seoul pollution data,
-    \item Madrid pollution data.
+    \item Citypulse (containing data from Aarhus, Denmark)
+    \item Seoul pollution data
+    \item Madrid pollution data
 \end{itemize}
 
 These three cities are located in three different regions, each with its own unique lifestyle, morphology, and climate.
@@ -75,7 +75,7 @@ Meteorological Data & \begin{tabular}[c]{@{}c@{}}temp, humidity, precip,\\ winds
 
 \subsection{Madrid}
 The air quality data for Madrid is publicly available on the Madrid's City Council Open Data website \cite{openDataMadrid}. Being data downloadable from the website in a confusing and not common format, and not well designed for general purpose use, a version of the dataset from Kaggle \cite{kaggleMadrid} has been used in this analysis.
-In the DataFrame, particle measurements are recorded for each station, covering the period from January 2001 to April 2018, provided that the station was operational throughout this timeframe. It's important to note that stations differ in their equipment, leading to each station being capable of measuring only a specific subset of particles. For the purposes of this work, we have analyzed data from only one station (Figure \ref{fig:madridsensors}) that collects the six pollutants of interest, and the time range was restricted to three years (2015 - 2017). 
+In the DataFrame, particle measurements are recorded for each station, covering the period from January 2001 to April 2018, provided that the station was operational throughout this timeframe. It is important to note that stations differ in their equipment, which means that each station is capable of measuring only a specific subset of particles. For the purposes of this work, we analyzed data from only one station (Figure \ref{fig:madridsensors}) that collects the six pollutants of interest. The time range was restricted to three years (2015-2017). 
 Missing data in some observations, were filled with the previous valid observation.
 Again, weather data has been gathered from Open-Meteo website to add information to this dataset.
 
@@ -116,10 +116,10 @@ The graphical representation (Figure \ref{fig:ts_citypulse}) reveals that the ti
 Let us now examine the correlation among all variables in the dataset (Figure \ref{fig:corr_matrix_citypulse}):
 \begin{itemize}
 
-    \item The variables "occupied" and "occupancy" are naturally correlated, as one is computed based on the other.
-    \item "temp" and "feelslike" exhibit a strong positive correlation, nearly perfect at 0.995244, as expected since they represent similar measurements of meteorological conditions.
-    \item The two target variables, ozone and PM\textsubscript{2.5}, are perfectly correlated, and this should be taken into consideration in model construction.
-    \item Ozone and PM\textsubscript{2.5} variables show positive correlations with the "temp" and "feelslike" variables, suggesting a potential association between these variables.
+    \item The variables ``occupied'' and ``occupancy'' are naturally correlated, as one is computed based on the other.
+    \item ``temp'' and ``feelslike'' exhibit a strong positive correlation, nearly perfect at 0.99, as expected since they represent similar measurements of meteorological conditions.
+    \item The two target variables, Ozone and PM\textsubscript{2.5}, are perfectly correlated, and this should be taken into consideration in model construction.
+    \item Ozone and PM\textsubscript{2.5} variables show positive correlations with the ``temp'' and ``feelslike'' variables, suggesting a potential association between these variables.
     \item Unexpectedly, the PM\textsubscript{10} and PM\textsubscript{2.5} variables do not show a strong correlation, as would be expected and we will see instead in the other two datasets.
 \end{itemize}
 
@@ -133,7 +133,7 @@ Let us now examine the correlation among all variables in the dataset (Figure \r
 \newpage
 \subsection{Seoul}
 
-Analyzing the time series of pollutants in Seoul (Figure \ref{fig:ts_seoul}) reveals several distinct patterns. In the cases of SO\textsubscript{2} and CO, peaks coincide on specific dates. Notably, CO levels constitute approximately 10\% of SO\textsubscript{2} levels. However, peak durations are limited to 2-3 observations, followed by an abrupt decline, raising concerns about observation accuracy. 
+Analyzing the time series of pollutants in Seoul (Figure \ref{fig:ts_seoul}) reveals several distinct patterns. In the cases of SO\textsubscript{2} and CO, peaks coincide on specific dates. Notably, CO levels are approximately 10\% of SO\textsubscript{2} levels. However, peak durations are limited to 2-3 observations, followed by an abrupt decline, raising concerns about observation accuracy. 
 A similar pattern emerges in PM\textsubscript{10} and PM\textsubscript{2.5}, underscoring the correlation between these two series. The historical O\textsubscript{3} series exhibits elevated levels during warmer months, contrasting with lower levels during colder months.
 Conversely, NO\textsubscript{2} displays an opposing trend, with reduced variability in warmer months and elevated levels in colder months. 
 
@@ -319,9 +319,8 @@ Following this, the autocorrelation function plots are presented. Analyzing the 
     \item \textbf{Carbon Monoxide (CO)} displays a daily and intra-daily autocorrelation, alongside a subtle tendency towards weekly seasonality.
 \end{itemize}
 
-\newpage
 \section{Conclusions}
-In this chapter, an examination of the primary facets of the three datasets has been conducted, with a particular emphasis on the time series of pollutants. In order to consolidate the most significant characteristics of the datasets, the following summary table is presented.
+This chapter examines the primary facets of the three datasets, with a particular emphasis on the time series of pollutants. To consolidate the most significant characteristics of the datasets, a summary table (Table \ref{tab:datasets_summary})is presented.
 
 
 
@@ -352,7 +351,7 @@ In this chapter, an examination of the primary facets of the three datasets has 
         \hline
     \end{tabular}
     \caption{Summary table of the Datasets}
-    
+    \label{tab:datasets_summary}
 \end{table}
 
 
