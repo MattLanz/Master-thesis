@@ -17,3 +17,14 @@ The investigation then focuses on examining datasets, with an emphasis on data a
 The thesis proceeds to detail the development of predictive models, covering data preparation, feature engineering, selection, scaling, and augmentation. A series of experiments were conducted to optimize the performance of the models for air quality prediction. 
 The core of the research focuses on presenting and analyzing the developed model architectures, together with the results obtained. 
 This section outlines the details of the models used for air quality prediction, including their design principles and capabilities. The thesis concludes with insights gained from the study and recommendations for future research. ​
+
+## Libraries used
+
+* Python
+* Tensorflow
+* Keras
+* Matplotlib
+* Numpy
+* Scikit-learn
+* Statsmodels
+
